@@ -1,5 +1,6 @@
 package com.example.bookshop.book;
 
+import com.example.bookshop.genre.Genre;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -57,6 +58,24 @@ public class BookController {
     ResponseEntity<Book> addBook(@RequestBody Book book){
         Book result = bookRepository.save(book);
         return new ResponseEntity(result, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/id/{id}")
+    public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody Book book){
+        if(!(bookRepository.existsById(id))) {
+            return ResponseEntity.notFound().build();
+        }
+        bookRepository.save(book);
+        return ResponseEntity.ok(book);
+    }
+
+    @DeleteMapping("/id/{id}")
+    public ResponseEntity<Book> deleteBook(@PathVariable Long id){
+        if(!(bookRepository.existsById(id))) {
+            return ResponseEntity.notFound().build();
+        }
+        bookRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

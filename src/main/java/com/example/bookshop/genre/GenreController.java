@@ -26,7 +26,7 @@ public class GenreController {
         return ResponseEntity.ok(genreRepository.findAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public Optional<Genre> getAuthor(@PathVariable("id") Long id){
         return genreRepository.findGenreById(id);
     }
@@ -35,6 +35,15 @@ public class GenreController {
     ResponseEntity<Book> addGenre(@RequestBody Genre genre){
         Genre result = genreRepository.save(genre);
         return new ResponseEntity(result, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/id/{id}")
+    public ResponseEntity<Genre> updateGenre(@PathVariable Long id, @RequestBody Genre genre){
+        if(!(genreRepository.existsById(id))) {
+            return ResponseEntity.notFound().build();
+        }
+        genreRepository.save(genre);
+        return ResponseEntity.ok(genre);
     }
 
 }
