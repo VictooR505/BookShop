@@ -1,7 +1,7 @@
 package com.example.bookshop.genre;
 
-import com.example.bookshop.author.Author;
 import com.example.bookshop.book.Book;
+import com.example.bookshop.book.BookRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +16,7 @@ public class GenreController {
     private final GenreService genreService;
     private final GenreRepository genreRepository;
 
+
     public GenreController(GenreService genreService, GenreRepository genreRepository) {
         this.genreService = genreService;
         this.genreRepository = genreRepository;
@@ -27,7 +28,7 @@ public class GenreController {
     }
 
     @GetMapping("/id/{id}")
-    public Optional<Genre> getAuthor(@PathVariable("id") Long id){
+    public Optional<Genre> getGenre(@PathVariable("id") Long id){
         return genreRepository.findGenreById(id);
     }
 

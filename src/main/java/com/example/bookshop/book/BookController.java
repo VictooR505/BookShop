@@ -26,7 +26,7 @@ public class BookController {
     }
 
     @GetMapping("/id/{id}")
-    public Optional<Book> bookById(@PathVariable("id") Long id){
+    public Book bookById(@PathVariable("id") Long id){
         return bookRepository.findBookById(id);
     }
     @GetMapping("/title/{title}")
