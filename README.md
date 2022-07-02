@@ -6,6 +6,6 @@ Simple web book shop application. It's a project which I'll develop. It allows y
 * MySQL
 * Hibernate
 ## TODO
-* Login/Register
+* Admin class and roles
 * Book filters
-* Unit tests
+* Security
