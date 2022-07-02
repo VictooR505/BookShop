@@ -12,7 +12,8 @@ import java.util.*;
 public class CartService {
 
     private List books = new ArrayList();
-    BookRepository bookRepository;
+    private Integer sum = 0;
+    private final BookRepository bookRepository;
 
     @Autowired
     public CartService(BookRepository bookRepository) {
@@ -24,6 +25,7 @@ public class CartService {
             findBook(book)
                     .setCount(findBook(book).getCount()-1);
             bookRepository.save(findBook(book));
+            setSum(getSum()+bookRepository.findBookById(book.getId()).getPrice());
             books.add(findBook(book));
             return true;
         }
@@ -34,6 +36,7 @@ public class CartService {
             books.remove(books.lastIndexOf(findBook(book)));
             findBook(book).setCount(findBook(book).getCount()+1);
             bookRepository.save(findBook(book));
+            setSum(getSum()-bookRepository.findBookById(book.getId()).getPrice());
             return true;
         }
         return false;
@@ -47,5 +50,11 @@ public class CartService {
         return Collections.unmodifiableList(books);
     }
 
+    public Integer getSum() {
+        return sum;
+    }
 
+    public void setSum(Integer sum) {
+        this.sum = sum;
+    }
 }

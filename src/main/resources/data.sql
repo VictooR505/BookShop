@@ -18,3 +18,6 @@ insert into books (title, price, count, author_id, genre_id) values
     ('And Then There Were None', 15, 20, 3, 2);
 insert into books (title, price, count, author_id, genre_id) values
     ('It', 30, 20, 4, 3);
+
+insert into users (login, password, email, cash, logged) values
+                    ('wiktor', 'vic', 'wik', 30, false)

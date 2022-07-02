@@ -1,7 +1,6 @@
 package com.example.bookshop.cart;
 
 import com.example.bookshop.book.Book;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,14 +12,18 @@ public class CartController {
     private final CartService cartService;
     Logger logger = Logger.getLogger(getClass().getName());
 
-    @Autowired
     public CartController(CartService cartService) {
         this.cartService = cartService;
     }
 
     @GetMapping()
-    List<Book> getCart(){
+    public List<Book> getCart(){
         return cartService.getCart();
+    }
+
+    @GetMapping("/sum")
+    public Integer getSum(){
+        return cartService.getSum();
     }
 
     @PostMapping()
