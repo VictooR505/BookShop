@@ -35,6 +35,15 @@ public class CartController {
         }
     }
 
+    @GetMapping("/buy/{id}")
+    public void buyBooks(@PathVariable Long id){
+        if(cartService.buyBooks(id)){
+            logger.info("Successful purchase");
+        }else{
+            logger.info("Insufficient funds");
+        }
+    }
+
     @DeleteMapping()
     public void deleteBook(@RequestBody Book book){
         if(cartService.removeBook(book)){

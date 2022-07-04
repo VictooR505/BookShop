@@ -2,10 +2,14 @@ package com.example.bookshop.cart;
 
 import com.example.bookshop.book.Book;
 import com.example.bookshop.book.BookRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.bookshop.user.User;
+import com.example.bookshop.user.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.logging.Logger;
 
 
 @Service
@@ -14,10 +18,12 @@ public class CartService {
     private List books = new ArrayList();
     private Integer sum = 0;
     private final BookRepository bookRepository;
+    private final UserRepository userRepository;
+    Logger logger = Logger.getLogger(getClass().getName());
 
-    @Autowired
-    public CartService(BookRepository bookRepository) {
+    public CartService(BookRepository bookRepository, UserRepository userRepository) {
         this.bookRepository = bookRepository;
+        this.userRepository = userRepository;
     }
 
     public boolean addBook(Book book){
@@ -25,7 +31,7 @@ public class CartService {
             findBook(book)
                     .setCount(findBook(book).getCount()-1);
             bookRepository.save(findBook(book));
-            setSum(getSum()+bookRepository.findBookById(book.getId()).getPrice());
+            setSum(getSum()+findBook(book).getPrice());
             books.add(findBook(book));
             return true;
         }
@@ -36,8 +42,23 @@ public class CartService {
             books.remove(books.lastIndexOf(findBook(book)));
             findBook(book).setCount(findBook(book).getCount()+1);
             bookRepository.save(findBook(book));
-            setSum(getSum()-bookRepository.findBookById(book.getId()).getPrice());
+            setSum(getSum()-findBook(book).getPrice());
             return true;
+        }
+        return false;
+    }
+
+    public boolean buyBooks(Long id){
+        User user = userRepository.findUserById(id);
+        if(user.isLogged() && user.getCash()>=getSum()){
+            user.setCash(user.getCash()-getSum());
+            userRepository.save(user);
+            setSum(0);
+            books.clear();
+            return true;
+        }else if(!user.isLogged()){
+            logger.info("User must be logged in");
+            return false;
         }
         return false;
     }

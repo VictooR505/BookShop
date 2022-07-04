@@ -28,11 +28,12 @@ public class UserService {
     }
 
     public boolean loginUser(String login, String password) {
-        if (userRepository.existsUserByLogin(login) && userRepository.findUserByLogin(login).getPassword().equals(password)) {
-            userRepository.findUserByLogin(login).setLogged(true);
-            userRepository.save(userRepository.findUserByLogin(login));
+        User user = userRepository.findUserByLogin(login);
+        if (userRepository.existsUserByLogin(login) && user.getPassword().equals(password)) {
+            user.setLogged(true);
+            userRepository.save(user);
             return true;
-        }else if(userRepository.findUserByLogin(login).getPassword().equals(password)){
+        }else if(user.getPassword().equals(password)){
             logger.info("Wrong password");
         }
         logger.info("User doesn't exist");
@@ -47,11 +48,12 @@ public class UserService {
     }
 
     public boolean depositCash(String login, Integer cash){
-        if(userRepository.existsUserByLogin(login) && userRepository.findUserByLogin(login).isLogged()){
-            userRepository.findUserByLogin(login).setCash(userRepository.findUserByLogin(login).getCash()+cash);
-            userRepository.save(userRepository.findUserByLogin(login));
+        User user = userRepository.findUserByLogin(login);
+        if(userRepository.existsUserByLogin(login) && user.isLogged()){
+            user.setCash(user.getCash()+cash);
+            userRepository.save(user);
             return true;
-        }else if(!userRepository.findUserByLogin(login).isLogged()){
+        }else if(!user.isLogged()){
             logger.info("User must be logged in");
             return false;
         }
@@ -60,11 +62,12 @@ public class UserService {
     }
 
     public boolean changeLogin(String login, String password, String newLogin){
-        if(userRepository.existsUserByLogin(login) && userRepository.findUserByLogin(login).getPassword().equals(password)){
-           userRepository.findUserByLogin(login).setLogin(newLogin);
-           userRepository.save(userRepository.findUserByLogin(login));
+        User user = userRepository.findUserByLogin(login);
+        if(userRepository.existsUserByLogin(login) && user.getPassword().equals(password)){
+           user.setLogin(newLogin);
+           userRepository.save(user);
            return true;
-        }else if(!userRepository.findUserByLogin(login).getPassword().equals(password)){
+        }else if(!user.getPassword().equals(password)){
             logger.info("Wrong password");
             return false;
         }
@@ -73,11 +76,12 @@ public class UserService {
     }
 
     public boolean changeEmail(String email, String password, String newEmail){
-        if(userRepository.existsUserByEmail(email) && userRepository.findUserByEmail(email).getPassword().equals(password)){
-            userRepository.findUserByEmail(email).setEmail(newEmail);
-            userRepository.save(userRepository.findUserByEmail(email));
+        User user = userRepository.findUserByEmail(email);
+        if(userRepository.existsUserByEmail(email) && user.getPassword().equals(password)){
+            user.setEmail(newEmail);
+            userRepository.save(user);
             return true;
-        }else if((!userRepository.findUserByEmail(email).getPassword().equals(password))){
+        }else if((!user.getPassword().equals(password))){
             logger.info("Wrong password");
         }
         logger.info("User doesn't exist");
