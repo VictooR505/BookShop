@@ -4,16 +4,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    Optional<Book> findBookByTitle(String title);
+    Book findBookByTitle(String title);
+    List<Book> findBooksByGenreId(Long id);
+    List<Book> findBooksByAuthorId(Long id);
+    List<Book> findBooksByAuthorName(String name);
+    List<Book> findBooksByGenreName(String name);
     Book findBookById(Long id);
-    Optional<List<Book>> findBooksByGenreId(Long id);
-    Optional<List<Book>> findBooksByAuthorId(Long id);
-    Optional<List<Book>> findBooksByAuthorName(String name);
-    Optional<List<Book>> findBooksByGenreName(String name);
-
+    boolean existsBookByTitle(String title);
 }

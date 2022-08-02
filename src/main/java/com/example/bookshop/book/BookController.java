@@ -1,11 +1,11 @@
 package com.example.bookshop.book;
 
+import com.example.bookshop.book.dto.BookUpdateDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/books")
@@ -26,55 +26,47 @@ public class BookController {
 
     @GetMapping("/id/{id}")
     public Book bookById(@PathVariable("id") Long id){
-        return bookRepository.findBookById(id);
+        return bookService.findBookById(id);
     }
     @GetMapping("/title/{title}")
-    public Optional<Book> bookByTitle(@PathVariable("title") String title){
-        return bookRepository.findBookByTitle(title);
+    public Book bookByTitle(@PathVariable("title") String title){
+        return bookService.findBookByTitle(title);
     }
 
     @GetMapping("/author/{id}")
-    public Optional<List<Book>> booksByAuthorId(@PathVariable Long id){
-        return bookRepository.findBooksByAuthorId(id);
+    public List<Book> booksByAuthorId(@PathVariable Long id){
+        return bookService.findBooksByAuthorId(id);
     }
 
     @GetMapping("author/name/{name}")
-    public Optional<List<Book>> booksByAuthor(@PathVariable String name){
-        return bookRepository.findBooksByAuthorName(name);
+    public List<Book> booksByAuthor(@PathVariable String name){
+        return bookService.findBooksByAuthorName(name);
     }
 
     @GetMapping("/genre/{id}")
-    public Optional<List<Book>> booksByGenreId(@PathVariable Long id){
-        return bookRepository.findBooksByGenreId(id);
+    public List<Book> booksByGenreId(@PathVariable Long id){
+        return bookService.findBooksByGenreId(id);
     }
 
     @GetMapping("genre/name/{name}")
-    public Optional<List<Book>> booksByGenre(@PathVariable String name){
-        return bookRepository.findBooksByGenreName(name);
+    public List<Book> booksByGenre(@PathVariable String name){
+        return bookService.findBooksByGenreName(name);
     }
 
     @PostMapping()
-    ResponseEntity<Book> addBook(@RequestBody Book book){
-        Book result = bookRepository.save(book);
-        return new ResponseEntity(result, HttpStatus.CREATED);
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addBook(@RequestBody Book book){
+       bookService.addBook(book);
     }
 
-    @PutMapping("/id/{id}")
-    public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody Book book){
-        if(!(bookRepository.existsById(id))) {
-            return ResponseEntity.notFound().build();
-        }
-        bookRepository.save(book);
-        return ResponseEntity.ok(book);
+    @PatchMapping("/id/{id}")
+    public void updateBook(@PathVariable Long id, @RequestBody BookUpdateDTO book){
+        bookService.updateBook(id, book);
     }
 
     @DeleteMapping("/id/{id}")
-    public ResponseEntity<Book> deleteBook(@PathVariable Long id){
-        if(!(bookRepository.existsById(id))) {
-            return ResponseEntity.notFound().build();
-        }
-        bookRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
+    public void deleteBook(@PathVariable Long id){
+        bookService.deleteBook(id);
     }
 
 }

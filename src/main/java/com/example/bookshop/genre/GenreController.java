@@ -1,12 +1,11 @@
 package com.example.bookshop.genre;
 
-import com.example.bookshop.book.Book;
+import com.example.bookshop.genre.dto.GenreUpdateDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/genre")
@@ -27,23 +26,24 @@ public class GenreController {
     }
 
     @GetMapping("/id/{id}")
-    public Optional<Genre> getGenre(@PathVariable("id") Long id){
-        return genreRepository.findGenreById(id);
+    public Genre getGenre(@PathVariable("id") Long id){
+        return genreService.findGenreById(id);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping()
-    ResponseEntity<Book> addGenre(@RequestBody Genre genre){
-        Genre result = genreRepository.save(genre);
-        return new ResponseEntity(result, HttpStatus.CREATED);
+    public void addGenre(@RequestBody Genre genre){
+        genreService.addGenre(genre);
     }
 
-    @PutMapping("/id/{id}")
-    public ResponseEntity<Genre> updateGenre(@PathVariable Long id, @RequestBody Genre genre){
-        if(!(genreRepository.existsById(id))) {
-            return ResponseEntity.notFound().build();
-        }
-        genreRepository.save(genre);
-        return ResponseEntity.ok(genre);
+    @PatchMapping("/id/{id}")
+    public void updateGenre(@PathVariable Long id, @RequestBody GenreUpdateDTO genre){
+        genreService.updateGenre(id, genre);
+    }
+
+    @DeleteMapping("/id/{id}")
+    public void deleteBook(@PathVariable Long id){
+        genreService.deleteGenre(id);
     }
 
 }
