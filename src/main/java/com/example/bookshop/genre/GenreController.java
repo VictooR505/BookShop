@@ -1,7 +1,6 @@
 package com.example.bookshop.genre;
 
 import com.example.bookshop.book.Book;
-import com.example.bookshop.book.BookRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
