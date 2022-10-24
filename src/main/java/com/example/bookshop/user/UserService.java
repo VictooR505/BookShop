@@ -43,6 +43,9 @@ public class UserService {
     }
     public boolean registerUser(User user){
         if(!userRepository.existsUserByLogin(user.getLogin())){
+            if(user.getCash()<0){
+                user.setCash(0);
+            }
             userRepository.save(user);
             return true;
         }

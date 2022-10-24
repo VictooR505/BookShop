@@ -6,6 +6,9 @@ public class CashDTO {
 
     public CashDTO(String login, Integer cash) {
         this.login = login;
+        if(cash<0){
+            throw new IllegalArgumentException("Cash cannot be negative");
+        }
         this.cash = cash;
     }
 

@@ -2,6 +2,7 @@ package com.example.bookshop.user;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.util.Objects;
 
 @Entity
@@ -16,6 +17,7 @@ public class User {
     private String password;
     @Column(unique = true)
     private String email;
+    @Min(0)
     private Integer cash;
     private boolean logged;
 
@@ -23,6 +25,9 @@ public class User {
         this.login = login;
         this.password = password;
         this.email = email;
+        if(cash<0){
+            throw new IllegalArgumentException("Cash cannot be negative");
+        }
         this.cash = cash;
         this.logged = logged;
     }
