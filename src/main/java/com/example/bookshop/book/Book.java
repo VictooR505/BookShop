@@ -2,6 +2,7 @@ package com.example.bookshop.book;
 
 import com.example.bookshop.author.Author;
 import com.example.bookshop.genre.Genre;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -17,7 +18,7 @@ public class Book {
     @JoinColumn(name = "author_id")
     private Author author;
     private String title;
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "genre_id")
     private Genre genre;
     private int price;

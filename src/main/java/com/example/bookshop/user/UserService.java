@@ -20,10 +20,11 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User getUser(String login){
+    public User getUserByLogin(String login){
         if(userRepository.existsUserByLogin(login)){
             return userRepository.findUserByLogin(login);
         }
+        logger.info("User doesn't exist");
         return null;
     }
 
@@ -33,8 +34,9 @@ public class UserService {
             user.setLogged(true);
             userRepository.save(user);
             return true;
-        }else if(user.getPassword().equals(password)){
+        }else if(!user.getPassword().equals(password)){
             logger.info("Wrong password");
+            return false;
         }
         logger.info("User doesn't exist");
         return false;

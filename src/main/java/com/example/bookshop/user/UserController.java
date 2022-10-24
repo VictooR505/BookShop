@@ -27,7 +27,7 @@ public class UserController {
 
     @GetMapping("/{login}")
     public User getUser(@PathVariable String login){
-        return userService.getUser(login);
+        return userService.getUserByLogin(login);
     }
 
     @PostMapping("/register")
