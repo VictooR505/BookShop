@@ -1,5 +1,8 @@
 package com.example.bookshop.book;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,10 +12,8 @@ import java.util.List;
 public interface BookRepository extends JpaRepository<Book, Long> {
 
     Book findBookByTitle(String title);
-    List<Book> findBooksByGenreId(Long id);
-    List<Book> findBooksByAuthorId(Long id);
-    List<Book> findBooksByAuthorName(String name);
-    List<Book> findBooksByGenreName(String name);
+    Page<Book> findBooksByAuthorName(String name, Pageable pageable);
+    Page<Book> findBooksByGenreName(String name, Pageable pageable);
     Book findBookById(Long id);
     boolean existsBookByTitle(String title);
 }

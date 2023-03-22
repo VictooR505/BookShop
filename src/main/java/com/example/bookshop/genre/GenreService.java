@@ -5,6 +5,7 @@ import com.example.bookshop.exception.ObjectNotFoundException;
 import com.example.bookshop.genre.dto.GenreUpdateDTO;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 @Service
@@ -16,6 +17,10 @@ public class GenreService {
 
     public GenreService(GenreRepository genreRepository) {
         this.genreRepository = genreRepository;
+    }
+
+    public List<Genre> getGenres(){
+        return genreRepository.findAll();
     }
 
     public Genre findGenreById(Long id){

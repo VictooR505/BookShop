@@ -2,26 +2,23 @@ package com.example.bookshop.author;
 
 import com.example.bookshop.author.dto.AuthorUpdateDTO;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/author")
+@RequestMapping("/authors")
 public class AuthorController {
 
-    private final AuthorRepository authorRepository;
     private final AuthorService authorService;
 
-    public AuthorController(AuthorRepository authorRepository, AuthorService authorService) {
-        this.authorRepository = authorRepository;
+    public AuthorController(AuthorService authorService) {
         this.authorService = authorService;
     }
 
     @GetMapping()
-    public ResponseEntity<List<Author>> authorList(){
-        return ResponseEntity.ok(authorRepository.findAll());
+    public List<Author> authorList(){
+        return authorService.getAuthors();
     }
 
     @GetMapping("/id/{id}")

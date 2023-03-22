@@ -5,6 +5,7 @@ import com.example.bookshop.exception.ArgumentInUseException;
 import com.example.bookshop.exception.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 @Service
@@ -16,6 +17,10 @@ public class AuthorService {
 
     public AuthorService(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
+    }
+
+    public List<Author> getAuthors(){
+        return authorRepository.findAll();
     }
 
     public Author findAuthorById(Long id){

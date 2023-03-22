@@ -5,6 +5,9 @@ import com.example.bookshop.book.dto.BookUpdateDTO;
 import com.example.bookshop.exception.ArgumentInUseException;
 import com.example.bookshop.exception.ObjectNotFoundException;
 import com.example.bookshop.genre.GenreRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +27,13 @@ public class BookService {
         this.genreRepository = genreRepository;
     }
 
+    public Page<Book> getBooks(String sortBy, String sortOrder, int page, int size){
+        if(!sortOrder.isEmpty() && !sortOrder.equalsIgnoreCase("asc") && !sortOrder.equalsIgnoreCase("desc")){
+            throw new IllegalArgumentException("Sort order must be ascending (ASC) or descending (DESC)");
+        }
+        return bookRepository.findAll(PageRequest.of(page, size, Sort.Direction.valueOf(sortOrder.toUpperCase()), sortBy));
+    }
+
     public Book findBookById(Long id){
         if(bookRepository.existsById(id)){
             return bookRepository.findBookById(id);
@@ -38,30 +48,20 @@ public class BookService {
         throw new ObjectNotFoundException("Book not found");
     }
 
-    public List<Book> findBooksByAuthorId(Long id){
-        if(authorRepository.existsById(id)){
-            return bookRepository.findBooksByAuthorId(id);
+    public Page<Book> findBooksByAuthorName(String name, String sortBy, String sortOrder, int page, int size){
+        if(!sortOrder.isEmpty() && !sortOrder.equalsIgnoreCase("asc") && !sortOrder.equalsIgnoreCase("desc")){
+            throw new IllegalArgumentException("Sort order must be ascending (ASC) or descending (DESC)");
+        }else if(authorRepository.existsByName(name)){
+            return bookRepository.findBooksByAuthorName(name,PageRequest.of(page, size, Sort.Direction.valueOf(sortOrder.toUpperCase()), sortBy));
         }
         throw new ObjectNotFoundException("Author not found");
     }
 
-    public List<Book> findBooksByAuthorName(String name){
-        if(authorRepository.existsByName(name)){
-            return bookRepository.findBooksByAuthorName(name);
-        }
-        throw new ObjectNotFoundException("Author not found");
-    }
-
-    public List<Book> findBooksByGenreId(Long id){
-        if(genreRepository.existsById(id)){
-            return bookRepository.findBooksByGenreId(id);
-        }
-        throw new ObjectNotFoundException("Genre not found");
-    }
-
-    public List<Book> findBooksByGenreName(String name){
-        if(genreRepository.existsByName(name)){
-            return bookRepository.findBooksByGenreName(name);
+    public Page<Book> findBooksByGenreName(String name, String sortBy, String sortOrder, int page, int size){
+        if(!sortOrder.isEmpty() && !sortOrder.equalsIgnoreCase("asc") && !sortOrder.equalsIgnoreCase("desc")){
+            throw new IllegalArgumentException("Sort order must be ascending (ASC) or descending (DESC)");
+        }else if(genreRepository.existsByName(name)){
+            return bookRepository.findBooksByGenreName(name, PageRequest.of(page, size, Sort.Direction.valueOf(sortOrder.toUpperCase()), sortBy));
         }
         throw new ObjectNotFoundException("Genre not found");
     }

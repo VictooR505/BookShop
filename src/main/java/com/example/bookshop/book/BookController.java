@@ -1,11 +1,9 @@
 package com.example.bookshop.book;
 
 import com.example.bookshop.book.dto.BookUpdateDTO;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/books")
@@ -20,8 +18,11 @@ public class BookController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<Book>> bookList(){
-       return ResponseEntity.ok(bookRepository.findAll());
+    public Page<Book> bookList(@RequestParam(defaultValue = "0") int page,
+                               @RequestParam(defaultValue = "10") int size,
+                               @RequestParam(defaultValue = "id") String sortBy,
+                               @RequestParam(defaultValue = "ASC") String sortOrder){
+       return bookService.getBooks(sortBy, sortOrder, page, size);
     }
 
     @GetMapping("/id/{id}")
@@ -33,24 +34,22 @@ public class BookController {
         return bookService.findBookByTitle(title);
     }
 
-    @GetMapping("/author/{id}")
-    public List<Book> booksByAuthorId(@PathVariable Long id){
-        return bookService.findBooksByAuthorId(id);
-    }
-
     @GetMapping("author/name/{name}")
-    public List<Book> booksByAuthor(@PathVariable String name){
-        return bookService.findBooksByAuthorName(name);
-    }
-
-    @GetMapping("/genre/{id}")
-    public List<Book> booksByGenreId(@PathVariable Long id){
-        return bookService.findBooksByGenreId(id);
+    public Page<Book> booksByAuthor(@PathVariable String name,
+                                    @RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "10") int size,
+                                    @RequestParam(defaultValue = "id") String sortBy,
+                                    @RequestParam(defaultValue = "ASC") String sortOrder){
+        return bookService.findBooksByAuthorName(name, sortBy ,sortOrder, page,size);
     }
 
     @GetMapping("genre/name/{name}")
-    public List<Book> booksByGenre(@PathVariable String name){
-        return bookService.findBooksByGenreName(name);
+    public Page<Book> booksByGenre(@PathVariable String name,
+                                   @RequestParam(defaultValue = "0") int page,
+                                   @RequestParam(defaultValue = "10") int size,
+                                   @RequestParam(defaultValue = "id") String sortBy,
+                                   @RequestParam(defaultValue = "ASC") String sortOrder){
+        return bookService.findBooksByGenreName(name, sortBy, sortOrder, page, size);
     }
 
     @PostMapping()
