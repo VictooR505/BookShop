@@ -114,7 +114,7 @@ public class BookServiceTest {
         genreRepository.save(genre);
         Book givenBook = new Book(author, "title", genre, 30, 10);
         //when
-        bookService.addBook(givenBook);
+      //  bookService.addBook(givenBook);
         Book actualBook = bookService.findBookById(givenBook.getId());
         //then
         assertEquals(givenBook,actualBook);

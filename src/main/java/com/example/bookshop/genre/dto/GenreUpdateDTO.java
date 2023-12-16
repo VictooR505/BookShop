@@ -8,6 +8,9 @@ public class GenreUpdateDTO {
         this.name = name;
     }
 
+    public GenreUpdateDTO() {
+    }
+
     public String getName() {
         return name;
     }

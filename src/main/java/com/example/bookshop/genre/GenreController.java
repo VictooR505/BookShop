@@ -2,13 +2,12 @@ package com.example.bookshop.genre;
 
 import com.example.bookshop.genre.dto.GenreUpdateDTO;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/genre")
+@RequestMapping("/genres")
 public class GenreController {
 
     private final GenreService genreService;

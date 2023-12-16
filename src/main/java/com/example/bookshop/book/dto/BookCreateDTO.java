@@ -1,16 +1,16 @@
 package com.example.bookshop.book.dto;
 
-import com.example.bookshop.author.Author;
-import com.example.bookshop.genre.Genre;
-
-public class BookUpdateDTO {
-    private Author author;
+public class BookCreateDTO {
+    private Long author;
     private String title;
-    private Genre genre;
+    private Long genre;
     private int price;
     private int count;
 
-    public BookUpdateDTO(Author author, String title, Genre genre, int price, int count) {
+    public BookCreateDTO() {
+    }
+
+    public BookCreateDTO(Long author, String title, Long genre, int price, int count) {
         this.author = author;
         this.title = title;
         this.genre = genre;
@@ -18,14 +18,11 @@ public class BookUpdateDTO {
         this.count = count;
     }
 
-    public BookUpdateDTO() {
-    }
-
-    public Author getAuthor() {
+    public Long getAuthor() {
         return author;
     }
 
-    public void setAuthor(Author author) {
+    public void setAuthor(Long author) {
         this.author = author;
     }
 
@@ -37,11 +34,11 @@ public class BookUpdateDTO {
         this.title = title;
     }
 
-    public Genre getGenre() {
+    public Long getGenre() {
         return genre;
     }
 
-    public void setGenre(Genre genre) {
+    public void setGenre(Long genre) {
         this.genre = genre;
     }
 

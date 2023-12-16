@@ -1,6 +1,7 @@
 package com.example.bookshop.book;
 
 import com.example.bookshop.author.AuthorRepository;
+import com.example.bookshop.book.dto.BookCreateDTO;
 import com.example.bookshop.book.dto.BookUpdateDTO;
 import com.example.bookshop.exception.ArgumentInUseException;
 import com.example.bookshop.exception.ObjectNotFoundException;
@@ -66,10 +67,17 @@ public class BookService {
         throw new ObjectNotFoundException("Genre not found");
     }
 
-    public void addBook(Book book){
-        if(bookRepository.existsBookByTitle(book.getTitle())){
+    public void addBook(BookCreateDTO bookCreateDTO){
+        if(bookRepository.existsBookByTitle(bookCreateDTO.getTitle())){
             throw new ArgumentInUseException("Books cannot be duplicated");
         }
+        Book book = new Book(
+                authorRepository.findAuthorById(bookCreateDTO.getAuthor()),
+                bookCreateDTO.getTitle(),
+                genreRepository.findGenreById(bookCreateDTO.getGenre()),
+                bookCreateDTO.getPrice(),
+                bookCreateDTO.getCount()
+        );
         bookRepository.save(book);
         logger.info("Book added successfully");
     }

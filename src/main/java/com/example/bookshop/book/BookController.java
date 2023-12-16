@@ -1,5 +1,6 @@
 package com.example.bookshop.book;
 
+import com.example.bookshop.book.dto.BookCreateDTO;
 import com.example.bookshop.book.dto.BookUpdateDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -54,7 +55,7 @@ public class BookController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public void addBook(@RequestBody Book book){
+    public void addBook(@RequestBody BookCreateDTO book){
        bookService.addBook(book);
     }
 

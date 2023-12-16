@@ -7,6 +7,9 @@ public class AuthorUpdateDTO {
         this.name = name;
     }
 
+    public AuthorUpdateDTO() {
+    }
+
     public String getName() {
         return name;
     }
