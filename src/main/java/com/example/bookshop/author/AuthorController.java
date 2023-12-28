@@ -8,6 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/authors")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class AuthorController {
 
     private final AuthorService authorService;

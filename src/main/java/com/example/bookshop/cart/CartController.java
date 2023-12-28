@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/cart")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class CartController {
     private final CartService cartService;
     Logger logger = Logger.getLogger(getClass().getName());

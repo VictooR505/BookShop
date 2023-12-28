@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/books")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class BookController {
 
     private final BookService bookService;
@@ -20,7 +21,7 @@ public class BookController {
 
     @GetMapping()
     public Page<Book> bookList(@RequestParam(defaultValue = "0") int page,
-                               @RequestParam(defaultValue = "10") int size,
+                               @RequestParam(defaultValue = "1000") int size,
                                @RequestParam(defaultValue = "id") String sortBy,
                                @RequestParam(defaultValue = "ASC") String sortOrder){
        return bookService.getBooks(sortBy, sortOrder, page, size);
@@ -38,7 +39,7 @@ public class BookController {
     @GetMapping("author/name/{name}")
     public Page<Book> booksByAuthor(@PathVariable String name,
                                     @RequestParam(defaultValue = "0") int page,
-                                    @RequestParam(defaultValue = "10") int size,
+                                    @RequestParam(defaultValue = "1000") int size,
                                     @RequestParam(defaultValue = "id") String sortBy,
                                     @RequestParam(defaultValue = "ASC") String sortOrder){
         return bookService.findBooksByAuthorName(name, sortBy ,sortOrder, page,size);
@@ -47,7 +48,7 @@ public class BookController {
     @GetMapping("genre/name/{name}")
     public Page<Book> booksByGenre(@PathVariable String name,
                                    @RequestParam(defaultValue = "0") int page,
-                                   @RequestParam(defaultValue = "10") int size,
+                                   @RequestParam(defaultValue = "1000") int size,
                                    @RequestParam(defaultValue = "id") String sortBy,
                                    @RequestParam(defaultValue = "ASC") String sortOrder){
         return bookService.findBooksByGenreName(name, sortBy, sortOrder, page, size);
