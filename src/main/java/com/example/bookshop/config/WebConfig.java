@@ -25,7 +25,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf().disable()
+        return http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/authenticate", "/sign-up").permitAll()
                 .and()
@@ -54,5 +54,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOrigins("http://localhost:4200")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                 .allowedHeaders("*");
+        WebMvcConfigurer.super.addCorsMappings(registry);
     }
 }
